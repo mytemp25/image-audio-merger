@@ -1,0 +1,6 @@
+Flask
+mutagen
+Pillow
+requests
+imageio
+moviepy
