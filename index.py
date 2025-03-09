@@ -58,7 +58,7 @@ def generate_video():
             return encoded_string
 
         base64_video = video_to_base64(video_path)
-        return jsonify({"video_url": f"data:video/mp4;charset=utf-8;base64,"+base64_video})
+        return jsonify({"video_url": f"data:video/mp4;charset=utf-8;base64,{base64_video}"})
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
