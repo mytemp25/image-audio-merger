@@ -50,11 +50,21 @@ def generate_video():
         video_path = os.path.join(VIDEO_DIR, "video.mp4")
         final_video.write_videofile(video_path, fps=20, codec="libx264", logger=None)
         print("about to ready")
-        # Convert video to base64
-        return jsonify({"video_url": request.host_url + "videos/video.mp4"})
+        import base64
+
+        def video_to_base64(video_path):
+            with open(video_path, "rb") as video_file:
+                encoded_string = base64.b64encode(video_file.read()).decode('utf-8')
+            return encoded_string
+
+        base64_video = video_to_base64(video_path)
+        return jsonify({"video_url": f"data:video/mp4;base64,"+base64_video})
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
+@app.route('/', methods=['POST'])
+def index():
+    return jsonify({"message": "Hello, World!"}), 200
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
