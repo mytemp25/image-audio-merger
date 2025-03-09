@@ -58,11 +58,11 @@ def generate_video():
             return encoded_string
 
         base64_video = video_to_base64(video_path)
-        return jsonify({"video_url": f"data:video/mp4;base64,"+base64_video})
+        return jsonify({"video_url": f"data:video/mp4;charset=utf-8;base64,"+base64_video})
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET'])
 def index():
     return jsonify({"message": "Hello, World!"}), 200
 if __name__ == '__main__':
